@@ -49,7 +49,7 @@ public class MakePostActivity extends AppCompatActivity {
         btnCaptureImage = findViewById(R.id.takephoto_btn);
         btnSubmit = findViewById(R.id.submit_btn);
 
-        //queryPosts();
+        queryPosts();
 
         btnCaptureImage.setOnClickListener(new View.OnClickListener() {
             @Override

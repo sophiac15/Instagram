@@ -1,5 +1,6 @@
 package com.example.instagram;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -30,6 +31,10 @@ public class HomeActivity extends AppCompatActivity {
                 final ParseUser user = ParseUser.getCurrentUser();
 
                 //createPost(description, imageFile, user);
+
+                final Intent intent = new Intent(HomeActivity.this, MakePostActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
 
