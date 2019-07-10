@@ -30,7 +30,17 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        //setContentView(R.layout.activity_main);
+
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        if (currentUser != null) {
+            final Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+            startActivity(intent);
+            finish();
+        } else {
+            // show the signup or login screen
+            setContentView(R.layout.activity_main);
+        }
 
 
         usernameInput = findViewById(R.id.username_et);
@@ -62,6 +72,8 @@ public class MainActivity extends AppCompatActivity {
                 signup(username, password, email);
             }
         });
+
+
 
     }
 

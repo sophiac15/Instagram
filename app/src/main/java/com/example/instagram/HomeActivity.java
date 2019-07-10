@@ -14,6 +14,7 @@ public class HomeActivity extends AppCompatActivity {
     private TextView descriptionInput;
     private Button refreshButton;
     private Button createButton;
+    private Button logoutBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +24,9 @@ public class HomeActivity extends AppCompatActivity {
         descriptionInput = findViewById(R.id.description_et);
         createButton = findViewById(R.id.create_btn);
         refreshButton = findViewById(R.id.refresh_btn);
+
+        logoutBtn = findViewById(R.id.logout_btn);
+
 
         createButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -42,6 +46,16 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //loadTopPosts();
+            }
+        });
+
+        logoutBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ParseUser.logOut();
+                final Intent intent = new Intent(HomeActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
 
