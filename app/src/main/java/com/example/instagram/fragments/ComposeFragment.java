@@ -18,15 +18,12 @@ import android.widget.Toast;
 import com.example.instagram.HomeActivity;
 import com.example.instagram.R;
 import com.example.instagram.model.Post;
-import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
-import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import java.io.File;
-import java.util.List;
 
 
 public class ComposeFragment extends Fragment {
@@ -59,7 +56,7 @@ public class ComposeFragment extends Fragment {
         btnSubmit = view.findViewById(R.id.submit_btn);
 
 
-        queryPosts();
+        //queryPosts();
 
         btnCaptureImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,29 +107,8 @@ public class ComposeFragment extends Fragment {
 
     }
 
-    private void queryPosts() {
-        ParseQuery<Post> postQuery = new ParseQuery<Post>(Post.class);
-        postQuery.include(Post.KEY_USER);
-        postQuery.findInBackground(new FindCallback<Post>() {
-            @Override
-            public void done(List<Post> posts, ParseException e) {
-                if (e != null) {
-                    Log.e(TAG, "Error with query");
-                    e.printStackTrace();
-                    return;
-                }
-                for (int i = 0; i < posts.size(); i++) {
-                    Post post = posts.get(i);
-                    Log.d(TAG, "Post: " + post.getDescription() + ", username: " + post.getUser().getUsername());
-
-                }
-            }
-        });
-    }
-
     public void gotImage(File takenPhotoFile) {
         photoFile = takenPhotoFile;
-
 
         Bitmap takenImage = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
         ivPostImage.setImageBitmap(takenImage);

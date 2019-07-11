@@ -8,7 +8,6 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.content.FileProvider;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
@@ -19,7 +18,6 @@ import android.widget.Toast;
 import com.example.instagram.fragments.ComposeFragment;
 import com.example.instagram.fragments.HomeFragment;
 import com.example.instagram.fragments.ProfileFragment;
-import com.parse.ParseFile;
 import com.parse.ParseUser;
 
 import java.io.File;
@@ -35,11 +33,13 @@ public class HomeActivity extends AppCompatActivity {
     private File photoFile;
 
     ComposeFragment composeFragment;
+    HomeFragment homeFragment;
+    ProfileFragment profileFragment;
 
     private BottomNavigationView bottomNavigationView;
 
 
-    private ViewPager vp;
+    //private ViewPager vp;
 
 
     @Override
@@ -51,15 +51,11 @@ public class HomeActivity extends AppCompatActivity {
         logoutBtn = findViewById(R.id.logout_btn);
 
 
-
-
-
-
         logoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ParseUser.logOut();
-                final Intent intent = new Intent(HomeActivity.this, MainActivity.class);
+                final Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -68,30 +64,30 @@ public class HomeActivity extends AppCompatActivity {
         bottomNavigationView = findViewById(R.id.bottom_navigation);
 
 
-
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
                     case R.id.action_home:
-                        Toast.makeText(HomeActivity.this, "Home!", Toast.LENGTH_SHORT).show();
-                        HomeFragment homeFragment = new HomeFragment();
+                        homeFragment = new HomeFragment();
                         getSupportFragmentManager().beginTransaction().replace(R.id.flContainer, homeFragment).commit();
+                        //Toast.makeText(HomeActivity.this, "Home!", Toast.LENGTH_SHORT).show();
                         return true;
                     case R.id.action_compose:
                         composeFragment = new ComposeFragment();
                         getSupportFragmentManager().beginTransaction().replace(R.id.flContainer, composeFragment).commit();
-                        Toast.makeText(HomeActivity.this, "Compose!", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(HomeActivity.this, "Compose!", Toast.LENGTH_SHORT).show();
                         return true;
                     case R.id.action_profile:
-                        ProfileFragment profileFragment = new ProfileFragment();
+                        profileFragment = new ProfileFragment();
                         getSupportFragmentManager().beginTransaction().replace(R.id.flContainer, profileFragment).commit();
-                        Toast.makeText(HomeActivity.this, "Profile!", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(HomeActivity.this, "Profile!", Toast.LENGTH_SHORT).show();
                         return true;
                     default: return true;
                 }
             }
         });
+        bottomNavigationView.setSelectedItemId(R.id.action_home);
 
     }
 
@@ -103,7 +99,7 @@ public class HomeActivity extends AppCompatActivity {
         // Create a File reference to access to future access
         photoFile = getPhotoFileUri(photoFileName);
 
-        ParseFile parseFile = new ParseFile(photoFile);
+        //ParseFile parseFile = new ParseFile(photoFile);
 
         // wrap File object into a content provider
         // required for API >= 24
