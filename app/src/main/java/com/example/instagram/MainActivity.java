@@ -37,10 +37,10 @@ public class MainActivity extends AppCompatActivity {
             final Intent intent = new Intent(MainActivity.this, HomeActivity.class);
             startActivity(intent);
             finish();
-        } else {
+        } //else {
             // show the signup or login screen
             setContentView(R.layout.activity_main);
-        }
+        //}
 
 
         usernameInput = findViewById(R.id.username_et);
