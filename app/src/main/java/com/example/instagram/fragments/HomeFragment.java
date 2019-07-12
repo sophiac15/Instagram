@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.instagram.EndlessRecyclerViewScrollListener;
 import com.example.instagram.PostsAdapter;
 import com.example.instagram.R;
 import com.example.instagram.model.Post;
@@ -26,11 +27,15 @@ import java.util.List;
 public class HomeFragment extends Fragment {
 
     private static final String TAG = "HomeFragment";
-    private RecyclerView rvPosts;
+    public RecyclerView rvPosts;
     PostsAdapter adapter;
     List<Post> mPosts;
+    public int whichFragment;
+
+    long maxId = 0;
 
     private SwipeRefreshLayout swipeContainer;
+    private EndlessRecyclerViewScrollListener scrollListener;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -43,10 +48,19 @@ public class HomeFragment extends Fragment {
         rvPosts = view.findViewById(R.id.rvPosts);
         mPosts = new ArrayList<>();
 
-        adapter = new PostsAdapter(getContext(), mPosts);
+        setRecyclerView();
 
-        rvPosts.setAdapter(adapter);
-        rvPosts.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        scrollListener = new EndlessRecyclerViewScrollListener(new LinearLayoutManager(getContext())) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                // Triggered only when new data needs to be appended to the list
+                // Add whatever code is needed to append new items to the bottom of the list
+                loadNextDataFromApi(page);
+            }
+        };
+
+        rvPosts.addOnScrollListener(scrollListener);
 
 
         // Lookup the swipe container view
@@ -72,6 +86,19 @@ public class HomeFragment extends Fragment {
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
 
+        queryPosts();
+    }
+
+    protected void setRecyclerView(){
+        whichFragment = 0;
+        adapter = new PostsAdapter(getContext(), mPosts, whichFragment);
+        rvPosts.setAdapter(adapter);
+        rvPosts.setLayoutManager(new LinearLayoutManager(getContext()));
+    }
+
+
+    public void loadNextDataFromApi(int offset) {
+        //maxId = mPosts.get(mPosts.size() - 1);
         queryPosts();
     }
 

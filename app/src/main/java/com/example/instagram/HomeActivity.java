@@ -37,6 +37,13 @@ public class HomeActivity extends AppCompatActivity {
     ProfileFragment profileFragment;
 
     private BottomNavigationView bottomNavigationView;
+//
+//    public void styleActionBar() {
+//        ActionBar ab = getSupportActionBar();
+//
+//        ab.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.insta_blue)));
+//
+//    }
 
 
     //private ViewPager vp;
@@ -47,9 +54,9 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        //styleActionBar();
 
         logoutBtn = findViewById(R.id.logout_btn);
-
 
         logoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override

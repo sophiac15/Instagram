@@ -1,7 +1,9 @@
 package com.example.instagram.fragments;
 
+import android.support.v7.widget.GridLayoutManager;
 import android.util.Log;
 
+import com.example.instagram.PostsAdapter;
 import com.example.instagram.model.Post;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -13,6 +15,14 @@ import java.util.List;
 public class ProfileFragment extends HomeFragment {
 
     private static final String TAG = "ProfileFragment";
+
+    @Override
+    protected void setRecyclerView(){
+        whichFragment=1;
+        adapter = new PostsAdapter(getContext(), mPosts, whichFragment);
+        rvPosts.setAdapter(adapter);
+        rvPosts.setLayoutManager(new GridLayoutManager(getContext(), 3));
+    }
 
     @Override
     protected void queryPosts() {

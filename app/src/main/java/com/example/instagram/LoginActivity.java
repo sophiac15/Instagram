@@ -1,7 +1,9 @@
 package com.example.instagram;
 
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -23,6 +25,14 @@ public class LoginActivity extends AppCompatActivity {
     private EditText passwordSignUp;
     private EditText emailSignUp;
     private Button signupBtn;
+    private ConstraintLayout constraintLayout;
+
+//    public void styleActionBar() {
+//        ActionBar ab = getSupportActionBar();
+//
+//        ab.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.insta_blue)));
+//
+//    }
 
 
 
@@ -31,6 +41,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_login);
+        //styleActionBar();
 
         ParseUser currentUser = ParseUser.getCurrentUser();
         if (currentUser != null) {
@@ -40,6 +51,15 @@ public class LoginActivity extends AppCompatActivity {
         } //else {
             // show the signup or login screen
             setContentView(R.layout.activity_login);
+
+        constraintLayout = findViewById(R.id.constraintLayout);
+
+        AnimationDrawable animationDrawable = (AnimationDrawable) constraintLayout.getBackground();
+        animationDrawable.setEnterFadeDuration(2000);
+        animationDrawable.setExitFadeDuration(1000);
+
+        // onResume
+        animationDrawable.start();
         //}
 
 
