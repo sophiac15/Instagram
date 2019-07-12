@@ -56,7 +56,6 @@ public class ComposeFragment extends Fragment {
         btnSubmit = view.findViewById(R.id.submit_btn);
 
 
-        //queryPosts();
 
         btnCaptureImage.setOnClickListener(new View.OnClickListener() {
             @Override

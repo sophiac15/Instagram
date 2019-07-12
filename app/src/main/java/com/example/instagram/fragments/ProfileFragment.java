@@ -1,9 +1,11 @@
 package com.example.instagram.fragments;
 
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 
+import com.example.instagram.EndlessRecyclerViewScrollListener;
 import com.example.instagram.PostsAdapter;
 import com.example.instagram.model.Post;
 import com.parse.FindCallback;
@@ -22,16 +24,43 @@ public class ProfileFragment extends HomeFragment {
         whichFragment=1;
         adapter = new PostsAdapter(getContext(), mPosts, whichFragment);
         rvPosts.setAdapter(adapter);
-        rvPosts.setLayoutManager(new GridLayoutManager(getContext(), 3));
+
+
+        GridLayoutManager gridLayoutManager= new GridLayoutManager(getContext(), 3);
+        rvPosts.setLayoutManager(gridLayoutManager);
+
+
+        scrollListener = new EndlessRecyclerViewScrollListener(gridLayoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                // Triggered only when new data needs to be appended to the list
+                // Add whatever code is needed to append new items to the bottom of the list
+                loadNextData(5);
+            }
+        };
+
+        rvPosts.addOnScrollListener(scrollListener);
+
+        queryPosts();
     }
+
+
+
 
     @Override
     protected void queryPosts() {
         ParseQuery<Post> postQuery = new ParseQuery<Post>(Post.class);
         postQuery.include(Post.KEY_USER);
-        postQuery.setLimit(20);
+        postQuery.setLimit(max);
         postQuery.whereEqualTo(Post.KEY_USER, ParseUser.getCurrentUser());
         postQuery.addDescendingOrder(Post.KEY_CREATED_AT);
+
+        if (!mPosts.isEmpty()) {
+            Post latest = mPosts.get(mPosts.size() - 1);
+            postQuery.whereLessThan("createdAt", latest.getCreatedAt());
+        }
+
+
         postQuery.findInBackground(new FindCallback<Post>() {
             @Override
             public void done(List<Post> posts, ParseException e) {

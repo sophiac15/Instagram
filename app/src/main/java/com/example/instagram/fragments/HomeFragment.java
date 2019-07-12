@@ -35,7 +35,7 @@ public class HomeFragment extends Fragment {
     int max = 3;
 
     private SwipeRefreshLayout swipeContainer;
-    private EndlessRecyclerViewScrollListener scrollListener;
+    public EndlessRecyclerViewScrollListener scrollListener;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
