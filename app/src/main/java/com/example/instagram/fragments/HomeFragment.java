@@ -32,7 +32,7 @@ public class HomeFragment extends Fragment {
     List<Post> mPosts;
     public int whichFragment;
 
-    long maxId = 0;
+    int max = 3;
 
     private SwipeRefreshLayout swipeContainer;
     private EndlessRecyclerViewScrollListener scrollListener;
@@ -48,15 +48,24 @@ public class HomeFragment extends Fragment {
         rvPosts = view.findViewById(R.id.rvPosts);
         mPosts = new ArrayList<>();
 
-        setRecyclerView();
+        setRecyclerView(view);
+    }
+
+    protected void setRecyclerView(View view){
+        whichFragment = 0;
+        adapter = new PostsAdapter(getContext(), mPosts, whichFragment);
+        rvPosts.setAdapter(adapter);
+
+        LinearLayoutManager linearLayoutManager= new LinearLayoutManager(getContext());
+        rvPosts.setLayoutManager(linearLayoutManager);
 
 
-        scrollListener = new EndlessRecyclerViewScrollListener(new LinearLayoutManager(getContext())) {
+        scrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
                 // Triggered only when new data needs to be appended to the list
                 // Add whatever code is needed to append new items to the bottom of the list
-                loadNextDataFromApi(page);
+                loadNextData(5);
             }
         };
 
@@ -89,16 +98,8 @@ public class HomeFragment extends Fragment {
         queryPosts();
     }
 
-    protected void setRecyclerView(){
-        whichFragment = 0;
-        adapter = new PostsAdapter(getContext(), mPosts, whichFragment);
-        rvPosts.setAdapter(adapter);
-        rvPosts.setLayoutManager(new LinearLayoutManager(getContext()));
-    }
-
-
-    public void loadNextDataFromApi(int offset) {
-        //maxId = mPosts.get(mPosts.size() - 1);
+    public void loadNextData(int offset) {
+        max = offset;
         queryPosts();
     }
 
@@ -106,8 +107,14 @@ public class HomeFragment extends Fragment {
     protected void queryPosts() {
         ParseQuery<Post> postQuery = new ParseQuery<Post>(Post.class);
         postQuery.include(Post.KEY_USER);
-        postQuery.setLimit(20);
+        postQuery.setLimit(max);
         postQuery.addDescendingOrder(Post.KEY_CREATED_AT);
+
+        if (!mPosts.isEmpty()) {
+            Post latest = mPosts.get(mPosts.size() - 1);
+            postQuery.whereLessThan("createdAt", latest.getCreatedAt());
+        }
+
         postQuery.findInBackground(new FindCallback<Post>() {
             @Override
             public void done(List<Post> posts, ParseException e) {

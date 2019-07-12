@@ -2,6 +2,7 @@ package com.example.instagram.fragments;
 
 import android.support.v7.widget.GridLayoutManager;
 import android.util.Log;
+import android.view.View;
 
 import com.example.instagram.PostsAdapter;
 import com.example.instagram.model.Post;
@@ -17,7 +18,7 @@ public class ProfileFragment extends HomeFragment {
     private static final String TAG = "ProfileFragment";
 
     @Override
-    protected void setRecyclerView(){
+    protected void setRecyclerView(View view){
         whichFragment=1;
         adapter = new PostsAdapter(getContext(), mPosts, whichFragment);
         rvPosts.setAdapter(adapter);

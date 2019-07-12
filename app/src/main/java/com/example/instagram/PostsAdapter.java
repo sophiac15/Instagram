@@ -50,11 +50,6 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
         Post post = posts.get(position);
 
-//        if (boolFragment == 0) {
-//
-//        }
-
-
 
         viewHolder.bind(post);
     }
@@ -150,9 +145,6 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                 }
                 //set description
                 tvDescription.setText(post.getDescription());
-
-
-
 
             } else if (whichFragment == 1) {
                 tvHandle.setVisibility(View.GONE);
