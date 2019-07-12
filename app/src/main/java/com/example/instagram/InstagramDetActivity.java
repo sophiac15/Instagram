@@ -1,8 +1,10 @@
 package com.example.instagram;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.format.DateUtils;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -27,12 +29,9 @@ public class InstagramDetActivity extends AppCompatActivity {
     public TextView tvDescription;
     public TextView tvTime;
 
-//    public void styleActionBar() {
-//        ActionBar ab = getSupportActionBar();
-//
-//        ab.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.insta_blue)));
-//
-//    }
+    public ImageButton ibLike;
+    public TextView tvLikes;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,15 +50,25 @@ public class InstagramDetActivity extends AppCompatActivity {
         tvHandle = findViewById(R.id.tvHandle);
         tvTime = findViewById(R.id.tvTime);
 
+        ibLike = findViewById(R.id.ibLike);
+        tvLikes = findViewById(R.id.tvLikes);
+
 
         // set tv title & overview
         tvDescription.setText(post.getDescription());
         tvTime.setText(getRelativeTimeAgo(String.valueOf(post.getCreatedAt())));
+        tvLikes.setText(Integer.toString(post.getNumLikes()));
 
         ParseFile image = post.getImage();
         Glide.with(this).load(image.getUrl()).into(ivPhoto);
 
-
+        if (post.isLiked()) {
+            ibLike.setImageResource(R.drawable.ufi_heart_active);
+            ibLike.setColorFilter(Color.argb(255,255,0,0));
+        } else {
+            ibLike.setImageResource(R.drawable.ufi_heart);
+            ibLike.setColorFilter(Color.argb(255,0,0,0));
+        }
 
 
 
