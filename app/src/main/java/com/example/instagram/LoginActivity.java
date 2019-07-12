@@ -27,29 +27,16 @@ public class LoginActivity extends AppCompatActivity {
     private Button signupBtn;
     private ConstraintLayout constraintLayout;
 
-//    public void styleActionBar() {
-//        ActionBar ab = getSupportActionBar();
-//
-//        ab.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.insta_blue)));
-//
-//    }
-
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_login);
-        //styleActionBar();
 
         ParseUser currentUser = ParseUser.getCurrentUser();
         if (currentUser != null) {
             final Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
             startActivity(intent);
             finish();
-        } //else {
-            // show the signup or login screen
+        }
             setContentView(R.layout.activity_login);
 
         constraintLayout = findViewById(R.id.constraintLayout);
@@ -60,8 +47,6 @@ public class LoginActivity extends AppCompatActivity {
 
         // onResume
         animationDrawable.start();
-        //}
-
 
         usernameInput = findViewById(R.id.username_et);
         passwordInput = findViewById(R.id.password_et);
@@ -117,9 +102,7 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-
     private void login(String username, String password) {
-        // TODO
         ParseUser.logInInBackground(username, password, new LogInCallback() {
             @Override
             public void done(ParseUser user, ParseException e) {

@@ -84,18 +84,12 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
         @Override
         public void onClick(View v) {
-            // get item position
             int position = getAdapterPosition();
-            // make sure position is valid
-            if (position != RecyclerView.NO_POSITION) {
 
-                // get movie at position
+            if (position != RecyclerView.NO_POSITION) {
                 Post post = posts.get(position);
-                // create intent for movie
                 Intent intent = new Intent(context, InstagramDetActivity.class);
-                // serialize movie
                 intent.putExtra(Post.class.getSimpleName(), post);
-                // show activity
                 context.startActivity(intent);
             }
         }
@@ -107,7 +101,6 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                 tvHandle.setText(post.getUser().getUsername());
                 tvLikes.setText(Integer.toString(post.getNumLikes()));
                 tvTime.setText(getRelativeTimeAgo(String.valueOf(post.getCreatedAt())));
-
 
                 if (post.isLiked()) {
                     ibLike.setImageResource(R.drawable.ufi_heart_active);
@@ -137,9 +130,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                         tvLikes.setText(Integer.toString(post.getNumLikes()));
                     }
                 });
-
-
-
+                
                 if (image != null) {
                     Glide.with(context).load(image.getUrl()).into(ivPhoto);
                 }

@@ -38,21 +38,16 @@ public class InstagramDetActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_instagram_det);
 
-       // styleActionBar();
-
         // unwrap the movie and assign field
         post = getIntent().getParcelableExtra(Post.class.getSimpleName());
-
 
         // view objects
         ivPhoto = findViewById(R.id.ivPhoto);
         tvDescription = findViewById(R.id.tvDescription);
         tvHandle = findViewById(R.id.tvHandle);
         tvTime = findViewById(R.id.tvTime);
-
         ibLike = findViewById(R.id.ibLike);
         tvLikes = findViewById(R.id.tvLikes);
-
 
         // set tv title & overview
         tvDescription.setText(post.getDescription());
@@ -69,8 +64,6 @@ public class InstagramDetActivity extends AppCompatActivity {
             ibLike.setImageResource(R.drawable.ufi_heart);
             ibLike.setColorFilter(Color.argb(255,0,0,0));
         }
-
-
 
         ParseQuery<ParseUser> userQuery = new ParseQuery<ParseUser>(ParseUser.class);
         userQuery.addDescendingOrder(Post.KEY_CREATED_AT);

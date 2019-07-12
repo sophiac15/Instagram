@@ -45,7 +45,6 @@ public class ComposeFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_compose, container, false);
     }
 
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -54,8 +53,6 @@ public class ComposeFragment extends Fragment {
         ivPostImage = view.findViewById(R.id.parseImageView);
         btnCaptureImage = view.findViewById(R.id.takephoto_btn);
         btnSubmit = view.findViewById(R.id.submit_btn);
-
-
 
         btnCaptureImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,11 +96,9 @@ public class ComposeFragment extends Fragment {
                     Log.d(TAG, "Success!");
                     etDescription.setText("");
                     ivPostImage.setImageResource(0);
-
                 }
             }
         });
-
     }
 
     public void gotImage(File takenPhotoFile) {

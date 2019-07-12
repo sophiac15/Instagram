@@ -63,14 +63,11 @@ public class HomeFragment extends Fragment {
         scrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
-                // Triggered only when new data needs to be appended to the list
-                // Add whatever code is needed to append new items to the bottom of the list
                 loadNextData(5);
             }
         };
 
         rvPosts.addOnScrollListener(scrollListener);
-
 
         // Lookup the swipe container view
         swipeContainer = view.findViewById(R.id.swipeContainer);
@@ -78,10 +75,6 @@ public class HomeFragment extends Fragment {
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                // Your code to refresh the list here.
-                // Make sure you call swipeContainer.setRefreshing(false)
-                // once the network request has completed successfully.
-                //fetchTimelineAsync(0);
                 adapter.clear();
                 queryPosts();
                 swipeContainer.setRefreshing(false);
